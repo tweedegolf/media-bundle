@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table()
  * @Vich\Uploadable
+ * @ORM\Entity(repositoryClass="TweedeGolf\MediaBundle\Entity\FileRepository")
  */
 class File
 {

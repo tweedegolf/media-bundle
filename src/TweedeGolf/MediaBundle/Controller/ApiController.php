@@ -23,7 +23,7 @@ class ApiController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $images = $this->getDoctrine()->getRepository('TweedeGolfMedia:File')->findImages();
+        $images = $this->getDoctrine()->getRepository('TweedeGolfMediaBundle:File')->findImages();
         $data = $this->get('tweedegolf.media.file_serializer')->serializeAll($images);
 
         return new JsonResponse([
@@ -34,7 +34,7 @@ class ApiController extends Controller
     /**
      * Creates a new File entity.
      *
-     * @Route("/")
+     * @Route("/post")
      * @Method("POST")
      */
     public function uploadAction(Request $request)
