@@ -5,7 +5,7 @@ namespace TweedeGolf\MediaBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Symfony\Component\HttpFoundation\File\File as File;
+use Symfony\Component\HttpFoundation\File\File as UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,9 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table()
  * @Vich\Uploadable
- * @ORM\Entity(repositoryClass="Tg\MainBundle\Entity\Repository\DocumentRepository")
  */
-class Document
+class File
 {
     use TimestampableEntity;
 
@@ -32,29 +31,31 @@ class Document
 
     /**
      * @Assert\File(maxSize="50M")
-     * @Vich\UploadableField(mapping="file", fileNameProperty="fileName")
+     * @Vich\UploadableField(mapping="media_file", fileNameProperty="fileName")
      *
-     * @var File $file
+     * @var UploadedFile $file
      */
     private $file;
 
     /**
      * @var string $fileName
      * @ORM\Column(type="string", length=255, nullable=false)
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $fileName;
 
     /**
-     * @var string $filesize
+     * @var string $fileSize
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $filesize;
+    private $fileSize;
 
     /**
-     * @var string $mimetype
+     * @var string $mimeType
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $mimetype;
+    private $mimeType;
 
     /**
      *
@@ -81,20 +82,21 @@ class Document
     /**
      * Set file
      *
-     * @param File $file
+     * @param UploadedFile $file
      * @return $this
      */
-    public function setFile(File $file = null)
+    public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
+
         $this->setUpdatedAt(new \DateTime());
 
         if ($file) {
-            $this->mimetype = $file->getMimeType();
-            $this->filesize = $file->getSize();
+            $this->mimeType = $file->getMimeType();
+            $this->fileSize = $file->getSize();
         } else {
-            $this->mimetype = null;
-            $this->filesize = null;
+            $this->mimeType = null;
+            $this->fileSize = null;
         }
 
         return $this;
@@ -103,7 +105,7 @@ class Document
     /**
      * Get file
      *
-     * @return File
+     * @return UploadedFile
      */
     public function getFile()
     {
@@ -114,7 +116,7 @@ class Document
      * Set fileName
      *
      * @param string $fileName
-     * @return File
+     * @return UploadedFile
      */
     public function setFileName($fileName = null)
     {
@@ -124,13 +126,13 @@ class Document
     }
 
     /**
-     * Get mimetype
+     * Get mimeType
      *
      * @return string
      */
     public function getMimetype()
     {
-        return $this->mimetype;
+        return $this->mimeType;
     }
 
     /**
@@ -145,17 +147,17 @@ class Document
 
     public function isImage()
     {
-        return in_array($this->mimetype, self::getImageMimetypes());
+        return in_array($this->mimeType, self::getImageMimetypes());
     }
 
     public function isSpreadsheet()
     {
-        return in_array($this->mimetype, self::getSpreadsheetMimetypes());
+        return in_array($this->mimeType, self::getSpreadsheetMimetypes());
     }
 
     public function isPdf()
     {
-        return in_array($this->mimetype, self::getPdfMimetypes());
+        return in_array($this->mimeType, self::getPdfMimetypes());
     }
 
 
