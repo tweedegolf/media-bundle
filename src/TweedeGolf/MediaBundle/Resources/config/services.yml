@@ -1,0 +1,7 @@
+
+services:
+    tweedegolf.media.file_serializer:
+        class: TweedeGolf\MediaBundle\Entity\FileSerializer
+        arguments:
+            - @vich_uploader.templating.helper.uploader_helper
+            - @liip_imagine.cache.manager

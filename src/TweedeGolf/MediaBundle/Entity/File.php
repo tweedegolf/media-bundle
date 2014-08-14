@@ -31,6 +31,8 @@ class File
 
     /**
      * @Assert\File(maxSize="50M")
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
      * @Vich\UploadableField(mapping="media_file", fileNameProperty="fileName")
      *
      * @var UploadedFile $file
@@ -40,8 +42,6 @@ class File
     /**
      * @var string $fileName
      * @ORM\Column(type="string", length=255, nullable=false)
-     * @Assert\NotNull()
-     * @Assert\NotBlank()
      */
     private $fileName;
 
@@ -130,7 +130,7 @@ class File
      *
      * @return string
      */
-    public function getMimetype()
+    public function getMimeType()
     {
         return $this->mimeType;
     }
