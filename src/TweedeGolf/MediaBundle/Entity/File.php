@@ -126,6 +126,16 @@ class File
         return $this;
     }
 
+    public function getExtension()
+    {
+        if (!$this->fileName) {
+
+            return null;
+        }
+
+        return pathinfo($this->fileName, PATHINFO_EXTENSION);
+    }
+
     /**
      * Get mimeType
      *

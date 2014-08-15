@@ -23,25 +23,66 @@ class ApiController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $images = $this->getDoctrine()->getRepository('TweedeGolfMediaBundle:File')->findImages();
-        $data = $this->get('tweedegolf.media.file_serializer')->serializeAll($images);
+        // $images = $this->getDoctrine()->getRepository('TweedeGolfMediaBundle:File')->findImages();
+        $results =  $this->getDoctrine()->getRepository('TweedeGolfMediaBundle:File')->findAll();
+        $data = $this->get('tweedegolf.media.file_serializer')->serializeAll($results);
+
 
         return new JsonResponse([
-            'images' => $data
+            'success' => $data
+        ]);
+    }
+
+    /**
+     * Delete a new File entity.
+     *
+     * @Route("/delete")
+     * @Method("POST")
+     */
+    public function deleteAction(Request $request)
+    {
+        $id = $request->get('file');
+        $translator = $this->get('translator');
+
+        if ($id !== null) {
+
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('TweedeGolfMediaBundle:File')->find($id);
+
+            if (!$entity) {
+                return new JsonResponse([
+                    'errors' => [
+                        $translator->trans('File not found'),
+                    ],
+                ]);
+            }
+
+            $em->remove($entity);
+            $em->flush();
+
+            return new JsonResponse([
+                'success' => intval($id),
+            ]);
+        }
+
+        return new JsonResponse([
+            'errors' => [
+                $translator->trans('Invalid request'),
+            ],
         ]);
     }
 
     /**
      * Creates a new File entity.
      *
-     * @Route("/post")
+     * @Route("/create")
      * @Method("POST")
      */
-    public function uploadAction(Request $request)
+    public function createAction(Request $request)
     {
         $entity = new File();
 
-        $form = $this->createUploadForm($entity);
+        $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -49,8 +90,10 @@ class ApiController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            $data = $this->get('tweedegolf.media.file_serializer')->serialize($entity);
+
             return new JsonResponse([
-                'success' => $entity->getId()
+                'success' => $data
             ]);
         }
 
@@ -61,7 +104,6 @@ class ApiController extends Controller
         }
 
         return new JsonResponse([
-            'valid' => $form->isValid(),
             'errors' => $errors,
         ]);
     }
@@ -70,7 +112,7 @@ class ApiController extends Controller
      * @param File $entity
      * @return Form
      */
-    protected function createUploadForm(File $entity)
+    protected function createCreateForm(File $entity)
     {
         $builder = $this->get('form.factory')->createNamedBuilder('', 'form', $entity, [
             'csrf_protection' => false,

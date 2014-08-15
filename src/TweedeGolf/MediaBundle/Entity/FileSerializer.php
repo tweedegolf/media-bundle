@@ -36,15 +36,22 @@ class FileSerializer
      */
     public function serialize(File $file)
     {
-        $path = $this->vich->asset($file, 'file');
-
-        return [
+        $data = [
+            'id'   => $file->getId(),
             'name' => $file->getFileName(),
-            'path' => $path,
-            'thumb' => $this->imagine->getBrowserPath($file->getFile()->getFileName(), 'thumbnail', true),
-            'size' => $file->getFile()->getSize(),
-            'type' => $file->getFile()->getMimeType(),
+            'path' => $this->vich->asset($file, 'file'),
+            'size' => $this->formatSize($file->getFile()->getSize()),
+            'mime' => $file->getFile()->getMimeType(),
         ];
+
+        if ($file->isImage()) {
+            $fileName = $file->getFile()->getFileName();
+            $data['thumb'] = $this->imagine->getBrowserPath($fileName, 'thumbnail', true);
+        } else {
+            $data['type'] = $file->getExtension();
+        }
+
+        return $data;
     }
 
     /*
@@ -60,5 +67,17 @@ class FileSerializer
         }
 
         return $data;
+    }
+
+    protected function formatSize($bytes)
+    {
+        $sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+
+        if ($bytes) {
+            $i = floor(log($bytes, 1024));
+            return round($bytes / pow(1024, $i), 2) . ' ' . $sizes[$i];
+        }
+
+        return '0 B';
     }
 }
