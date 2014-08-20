@@ -23,8 +23,10 @@ class ApiController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // $images = $this->getDoctrine()->getRepository('TweedeGolfMediaBundle:File')->findImages();
-        $results =  $this->getDoctrine()->getRepository('TweedeGolfMediaBundle:File')->findAll();
+        $filter = $request->query->get('filter', 'all');
+        $order = $request->query->get('order', 'newest');
+
+        $results =  $this->getDoctrine()->getRepository('TweedeGolfMediaBundle:File')->findSubset($filter, $order);
         $data = $this->get('tweedegolf.media.file_serializer')->serializeAll($results);
 
 

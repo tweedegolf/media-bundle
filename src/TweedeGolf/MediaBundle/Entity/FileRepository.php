@@ -8,25 +8,43 @@ use TweedeGolf\MediaBundle\Entity\File;
 
 class FileRepository extends EntityRepository
 {
-    /**
-     * Creates a query builder returning documents having image files.
-     * @return QueryBuilder
-     */
-    public function createImagesBuilder()
+
+    public function findSubset($type = 'all', $order = 'newest')
     {
         $qb = $this->createQueryBuilder('f');
-        $qb->where($qb->expr()->in('f.mimeType', '?1'));
-        $qb->setParameter(1, array_merge(File::getImageMimetypes()));
 
-        return $qb;
+        if ($type === 'images') {
+
+            $qb->where($qb->expr()->in('f.mimeType', '?1'));
+            $qb->setParameter(1, array_merge(File::getImageMimetypes()));
+
+        } else if ($type === 'documents') {
+
+            $qb->where($qb->expr()->notIn('f.mimeType', '?1'));
+            $qb->setParameter(1, array_merge(File::getImageMimetypes()));
+        }
+
+        $mapping = FileRepository::getOrderMapping();
+
+        if (in_array($order, array_keys($mapping))) {
+
+            $qb->orderBy($mapping[$order]['field'], $mapping[$order]['direction']);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
-    /**
-     * Returns the documents for which the type is an image.
-     * @return File[]
-     */
-    public function findImages()
+    static public function getOrderMapping()
     {
-        return $this->createImagesBuilder()->getQuery()->getResult();
+        return [
+            'oldest'    => ['field' => 'f.createdAt', 'direction' => 'ASC'],
+            'newest'    => ['field' => 'f.createdAt', 'direction' => 'DESC'],
+            'name-asc'  => ['field' => 'f.fileName',  'direction' => 'ASC'],
+            'name-desc' => ['field' => 'f.fileName',  'direction' => 'DESC'],
+            'smallest'  => ['field' => 'f.fileSize',  'direction' => 'ASC'],
+            'largest'   => ['field' => 'f.fileSize',  'direction' => 'DESC'],
+            'type-asc'  => ['field' => 'f.mimeType',  'direction' => 'ASC'],
+            'type-desc' => ['field' => 'f.mimeType',  'direction' => 'DESC'],
+        ];
     }
 }
