@@ -31,10 +31,27 @@ class File
     private $id;
 
     /**
-     * @Assert\File(maxSize="50M")
+     * @Assert\File(maxSize="20M", mimeTypes={
+     *     "image/png",
+     *     "image/jpg",
+     *     "image/jpeg",
+     *     "image/gif",
+     *     "text/plain",
+     *     "text/richtext",
+     *     "audio/mpeg",
+     *     "audio/mp3",
+     *     "application/pdf",
+     *     "application/x-pdf",
+     *     "application/msword",
+     *     "application/vnd.ms-excel",
+     *     "application/vnd.ms-powerpoint",
+     *     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+     *     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+     *     "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+     * })
      * @Assert\NotNull()
      * @Assert\NotBlank()
-     * @Vich\UploadableField(mapping="media_file", fileNameProperty="fileName")
+     * @Vich\UploadableField(mapping="tgmedia_file", fileNameProperty="fileName")
      *
      * @var UploadedFile $file
      */
@@ -59,10 +76,12 @@ class File
     private $mimeType;
 
     /**
-     *
+     * Return the string representation of this entity
+     * @return string
      */
-    public function __construct()
+    public function __toString()
     {
+        return $this->fileName;
     }
 
     /**
@@ -73,11 +92,6 @@ class File
     public function getId()
     {
         return $this->id;
-    }
-
-    public function __toString()
-    {
-        return $this->fileName;
     }
 
     /**
@@ -126,6 +140,10 @@ class File
         return $this;
     }
 
+    /**
+     * Retrieve the extension of the file
+     * @return string
+     */
     public function getExtension()
     {
         if (!$this->fileName) {
@@ -156,64 +174,26 @@ class File
         return $this->fileName;
     }
 
+    /**
+     * Check if the file is an image based on its mime type
+     * @return boolean
+     */
     public function isImage()
     {
         return in_array($this->mimeType, self::getImageMimetypes());
     }
 
-    public function isSpreadsheet()
-    {
-        return in_array($this->mimeType, self::getSpreadsheetMimetypes());
-    }
-
-    public function isPdf()
-    {
-        return in_array($this->mimeType, self::getPdfMimetypes());
-    }
-
-
+    /**
+     * Return valid image mime types
+     * @return array[string]
+     */
     public static function getImageMimetypes()
     {
         return [
+            'image/jpg',
             'image/jpeg',
             'image/gif',
-            'image/png'
-        ];
-    }
-
-    public static function getSpreadsheetMimetypes()
-    {
-        return [
-            'application/vnd.ms-excel',
-            'application/msexcel',
-            'application/x-msexcel',
-            'application/x-ms-excel',
-            'application/x-excel',
-            'application/x-dos_ms_excel',
-            'application/xls',
-            'application/x-xls',
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            'text/plain', //csv, dif, slk
-            'application/x-dbf', // dbf
-            'application/xml', //fods, uos, xml
-            'text/html', //html
-            'application/vnd.oasis.opendocument.spreadsheet', //ods
-            'application/vnd.oasis.opendocument.spreadsheet-template', //ots
-            'application/octet-stream', // stc, sxc
-            'application/vnd.ms-office', //xls. xlt
-            'application/zip' //xlsx
-        ];
-    }
-
-    public static function getPdfMimetypes()
-    {
-        return [
-            'application/pdf',
-            'application/acrobat',
-            'application/x-pdf',
-            'applications/vnd.pdf',
-            'text/pdf',
-            'text/x-pdf'
+            'image/png',
         ];
     }
 }

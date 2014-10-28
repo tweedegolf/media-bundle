@@ -1,0 +1,164 @@
+
+<div class="modal-dialog">
+  <div class="modal-content" data-index="{{ path('tgmedia_index') }}" data-create="{{ path('tgmedia_create') }}" data-delete="{{ path('tgmedia_delete') }}">
+    <div class="modal-header">
+      <button on-click="select-upload" class="btn btn-primary">
+        <span class="fa fa-upload"></span>
+        {{ 'Upload'|trans }}
+      </button>
+      <div class="btn-group">
+        <div class="btn-group">
+          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            <span class="fa fa-filter"></span>
+            {{ 'Filter'|trans }}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li role="presentation">
+              <a role="menuitem" href="#" on-click="filter:all">
+                <span class="fa {{ "{{ icon('filter', 'all') }}" }}"></span>
+                <span class="fa fa-file-o"></span>
+                {{ 'All'|trans }}
+              </a>
+            </li>
+            <li role="presentation">
+              <a role="menuitem" href="#" on-click="filter:images">
+                <span class="fa {{ "{{ icon('filter', 'images') }}" }}"></span>
+                <span class="fa fa-file-image-o"></span>
+                {{ 'Images'|trans }}
+              </a>
+            </li>
+            <li role="presentation">
+              <a role="menuitem" href="#" on-click="filter:documents">
+                <span class="fa {{ "{{ icon('filter', 'documents') }}" }}"></span>
+                <span class="fa fa-file-text-o"></span>
+                {{ 'Documents'|trans }}
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="btn-group">
+          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            <span class="fa fa-sort-amount-asc"></span>
+            {{ 'Sort'|trans }}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li role="presentation">
+              <a role="menuitem" href="#" on-click="order:newest">
+                <span class="fa {{ "{{ icon('order', 'newest') }}" }}"></span>
+                <span class="fa fa-clock-o"></span>
+                {{ 'Newest'|trans }}
+              </a>
+            </li>
+            <li role="presentation">
+              <a role="menuitem" href="#" on-click="order:oldest">
+                <span class="fa {{ "{{ icon('order', 'oldest') }}" }}"></span>
+                <span class="fa fa-clock-o"></span>
+                {{ 'Oldest'|trans }}
+              </a>
+            </li>
+            <li role="presentation">
+              <a role="menuitem" href="#" on-click="order:largest">
+                <span class="fa {{ "{{ icon('order', 'largest') }}" }}"></span>
+                <span class="fa fa-sort-numeric-desc"></span>
+                {{ 'File size'|trans }}
+              </a>
+            </li>
+            <li role="presentation">
+              <a role="menuitem" href="#" on-click="order:smallest">
+                <span class="fa {{ "{{ icon('order', 'smallest') }}" }}"></span>
+                <span class="fa fa-sort-numeric-asc"></span>
+                {{ 'File size'|trans }}
+              </a>
+            </li>
+            <li role="presentation">
+              <a role="menuitem" href="#" on-click="order:name-asc">
+                <span class="fa {{ "{{ icon('order', 'name-asc') }}" }}"></span>
+                <span class="fa fa-sort-alpha-asc"></span>
+                {{ 'File name'|trans }}
+              </a>
+            </li>
+            <li role="presentation">
+              <a role="menuitem" href="#" on-click="order:name-desc">
+                <span class="fa {{ "{{ icon('order', 'name-desc') }}" }}"></span>
+                <span class="fa fa-sort-alpha-desc"></span>
+                {{ 'File name'|trans }}
+              </a>
+            </li>
+            <li role="presentation">
+              <a role="menuitem" href="#" on-click="order:type-asc">
+                <span class="fa {{ "{{ icon('order', 'type-asc') }}" }}"></span>
+                <span class="fa fa-sort-alpha-asc"></span>
+                {{ 'File type'|trans }}
+              </a>
+            </li>
+            <li role="presentation">
+              <a role="menuitem" href="#" on-click="order:type-desc">
+                <span class="fa {{ "{{ icon('order', 'type-desc') }}" }}"></span>
+                <span class="fa fa-sort-alpha-desc"></span>
+                {{ 'File type'|trans }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <button type="button" class="close" data-dismiss="modal">
+        <span class="fa fa-times"></span>
+      </button>
+    </div>
+    <div class="modal-body" on-dragenter="dropzone:show">
+      <div class="drop-zone {{ "{{^drop}}" }}hide{{ "{{/drop}}" }}" on-dragleave="dropzone:hide" on-drop="drop" on-dragover="drag-over"></div>
+      <div class="loader {{ "{{^load}}" }}hide{{ "{{/load}}" }}"></div>
+      {{ "{{#errors}}" }}
+      <div class="alert alert-{{ "{{type}}" }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">
+            {{ 'Close'|trans }}
+          </span>
+        </button>
+        <span class="fa fa-bell-o"></span>
+        {{ "{{message}}" }}
+      </div>
+      {{ "{{/errors}}" }}
+      <div class="row">
+        {{ "{{#items}}" }}
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+          <a on-click="select" href="{{ "{{path}}" }}" class="thumbnail" on-mousedown="prevent-drag" data-toggle="tooltip" title="{{ "{{name}}" }} ({{ "{{size}}" }})">
+            {{ "{{#thumb}}" }}
+              <img src="{{ "{{thumb}}" }}" alt="{{ "{{name}}" }}">
+            {{ "{{/thumb}}" }}
+            {{ "{{#type}}" }}
+              <span class="fa type type-{{ "{{type}}" }}"></span><br>
+              <span>{{ "{{type}}" }}</span>
+            {{ "{{/type}}" }}
+            <div class="caption">
+              <span on-click="show-delete:{{ "{{id}}" }}" class="fa fa-trash-o text-danger delete-file"></span>
+              {{ "{{name}}" }} ({{ "{{size}}" }})
+            </div>
+            <div class="confirm-delete {{ "{{^confirm}}" }}hide{{ "{{/confirm}}" }}">
+              <p>{{ 'Permanently delete this file?'|trans }}</p>
+              <div class="btn-group">
+                <button on-click="delete:{{ "{{id}}" }}" type="button" class="btn btn-xs btn-danger">
+                  <span class="fa fa-trash-o"></span>
+                  {{ 'Delete'|trans }}
+                </button>
+                <button on-click="hide-delete:{{ "{{id}}" }}" type="button" class="btn btn-xs btn-default">
+                  <span class="fa fa-times"></span>
+                  {{ 'Cancel'|trans }}
+                </button>
+              </div>
+            </div>
+          </a>
+        </div>
+        {{ "{{/items}}" }}
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="close" data-dismiss="modal">
+        <span class="fa fa-times"></span>
+      </button>
+    </div>
+  </div>
+</div>

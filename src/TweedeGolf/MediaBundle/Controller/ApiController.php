@@ -16,9 +16,20 @@ use TweedeGolf\MediaBundle\Entity\File;
 class ApiController extends Controller
 {
     /**
-     * Creates a new File entity.
+     * Render the modal template
      *
-     * @Route("/")
+     * @Route("/modal")
+     * @Method("GET")
+     */
+    public function modalAction(Request $request)
+    {
+        return $this->render('TweedeGolfMediaBundle:File:modal.html.twig');
+    }
+
+    /**
+     * List, sort and filter files
+     *
+     * @Route("/", name="tgmedia_index")
      * @Method("GET")
      */
     public function indexAction(Request $request)
@@ -29,16 +40,15 @@ class ApiController extends Controller
         $results =  $this->getDoctrine()->getRepository('TweedeGolfMediaBundle:File')->findSubset($filter, $order);
         $data = $this->get('tweedegolf.media.file_serializer')->serializeAll($results);
 
-
         return new JsonResponse([
             'success' => $data
         ]);
     }
 
     /**
-     * Delete a new File entity.
+     * Delete a new file entity
      *
-     * @Route("/delete")
+     * @Route("/delete", name="tgmedia_delete")
      * @Method("POST")
      */
     public function deleteAction(Request $request)
@@ -75,9 +85,9 @@ class ApiController extends Controller
     }
 
     /**
-     * Creates a new File entity.
+     * Creates a new file entity
      *
-     * @Route("/create")
+     * @Route("/create", name="tgmedia_create")
      * @Method("POST")
      */
     public function createAction(Request $request)
@@ -111,6 +121,9 @@ class ApiController extends Controller
     }
 
     /**
+     * Create the upload form
+     * Only used for validation
+     *
      * @param File $entity
      * @return Form
      */

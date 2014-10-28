@@ -46,7 +46,7 @@ class FileSerializer
 
         if ($file->isImage()) {
             $fileName = $file->getFile()->getFileName();
-            $data['thumb'] = $this->imagine->getBrowserPath($fileName, 'thumbnail', true);
+            $data['thumb'] = $this->imagine->getBrowserPath($fileName, 'tgmedia_thumbnail', true);
         } else {
             $data['type'] = $file->getExtension();
         }
