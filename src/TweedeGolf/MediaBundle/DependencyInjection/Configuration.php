@@ -20,17 +20,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('tgmedia');
 
-        $rootNode
-            ->children()
-                ->scalarNode('allowed_mimes_types')
-                    ->isRequired()
-                ->end()
-                ->scalarNode('max_file_size')
-                    ->isRequired()
-                ->end()
-            ->end()
-        ;
-
         return $treeBuilder;
     }
 }

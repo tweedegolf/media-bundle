@@ -7,6 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper ;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager as ImagineCacheManager;
 
+/**
+ * This class is responsible for serializing a file
+ * Converts a file entity to an associative array and adds
+ * extra fields like an URL to the thumbnail image
+ */
 class FileSerializer
 {
 
@@ -31,6 +36,7 @@ class FileSerializer
     }
 
     /**
+     * Serialize a single file
      * @param File $File
      * @return array
      */
@@ -54,7 +60,8 @@ class FileSerializer
         return $data;
     }
 
-    /*
+    /**
+     * Serialize a list of files
      * @param array File
      * @return array
      */
@@ -69,12 +76,19 @@ class FileSerializer
         return $data;
     }
 
+    /**
+     * Convert a size in bytes to a human readable representation
+     * @param integer $bytes number of bytes
+     */
     protected function formatSize($bytes)
     {
         $sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
 
         if ($bytes) {
             $i = floor(log($bytes, 1024));
+            if (!in_array($i, $sizes)) {
+                return 'ultra huge';
+            }
             return round($bytes / pow(1024, $i), 2) . ' ' . $sizes[$i];
         }
 

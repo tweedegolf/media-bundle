@@ -37,7 +37,8 @@ class ApiController extends Controller
         $filter = $request->query->get('filter', 'all');
         $order = $request->query->get('order', 'newest');
 
-        $results =  $this->getDoctrine()->getRepository('TweedeGolfMediaBundle:File')->findSubset($filter, $order);
+        $repo = $this->getDoctrine()->getRepository('TweedeGolfMediaBundle:File');
+        $results = $repo->findSubset($filter, $order);
         $data = $this->get('tweedegolf.media.file_serializer')->serializeAll($results);
 
         return new JsonResponse([

@@ -1,7 +1,16 @@
-# TweedeGolfMediaBundle
+# TweedeGolf MediaBundle
+
+The TweedeGolf MediaBundle provides a ready-to-use media manager for your Symfony2 project. Although it is especially designed to work with tinyMCE, the media bundle could be used for several other purposes.
 
 
-    # Doctrine Extensions Configuration
+
+In essence, the TweedeGolf MediaBundle provides a File Entity and a controller that implements a JSON API for this entity
+
+This repository only provides the Symfony2 bundle. The front-end scripts used to display
+
+
+Example configuration
+
     stof_doctrine_extensions:
         orm:
             default:
@@ -12,8 +21,6 @@
         type:     annotation
         prefix:   /api
 
-
-    # Gaufrette Configuration
     knp_gaufrette:
         stream_wrapper: ~
         adapters:
@@ -25,7 +32,6 @@
             tgmedia_files:
                 adapter: tgmedia_adapter
 
-    # Vich Configuration
     vich_uploader:
         db_driver: orm
         gaufrette: true
