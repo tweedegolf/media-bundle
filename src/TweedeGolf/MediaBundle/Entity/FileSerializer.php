@@ -45,7 +45,7 @@ class FileSerializer
         $data = [
             'id'   => $file->getId(),
             'name' => $file->getFileName(),
-            'path' => $this->vich->asset($file, 'file'),
+            'path' => $this->vich->asset($file, 'tgmedia_file'),
             'size' => $this->formatSize($file->getFile()->getSize()),
             'mime' => $file->getFile()->getMimeType(),
         ];
