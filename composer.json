@@ -14,7 +14,7 @@
         "doctrine/doctrine-bundle": "~1.2.0",
         "stof/doctrine-extensions-bundle": "~1.1",
         "vich/uploader-bundle": "~0.9",
-        "liip/imagine-bundle": "~0.21",
+        "liip/imagine-bundle": "~1.2",
         "knplabs/knp-gaufrette-bundle": "~0.1.7"
     },
     "autoload": {
