@@ -36,6 +36,8 @@ Using [Composer](https://getcomposer.org/) add the bundle to your requirements:
 
 Then run `composer update tweedegolf/media-bundle`
 
+For installation instructions of the [media browser, see the repository](https://github.com/tweedegolf/media-browser).
+
 ### Basic configuration
 Define mappings in your configuration file `app/config/config.yml`:
 
