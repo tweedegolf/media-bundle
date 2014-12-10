@@ -33,7 +33,6 @@ Example configuration of StofdoctrineExtensions, KnpGaufretteBunlde, VichUploade
                 namer: vich_uploader.namer_origname
 
     liip_imagine:
-        data_loader: stream.tgmedia_files
         filter_sets:
             tgmedia_thumbnail:
                 quality: 80

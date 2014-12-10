@@ -45,13 +45,13 @@ class FileSerializer
         $data = [
             'id'   => $file->getId(),
             'name' => $file->getFileName(),
-            'path' => $this->vich->asset($file, 'file'),
+            'path' => $this->vich->asset($file, 'tgmedia_file'),
             'size' => $this->formatSize($file->getFile()->getSize()),
             'mime' => $file->getFile()->getMimeType(),
         ];
 
         if ($file->isImage()) {
-            $fileName = $file->getFile()->getFileName();
+            $fileName = $this->vich->asset($file, 'tgmedia_file');
             $data['thumb'] = $this->imagine->getBrowserPath($fileName, 'tgmedia_thumbnail', true);
         } else {
             $data['type'] = $file->getExtension();
@@ -69,7 +69,7 @@ class FileSerializer
     {
         $data = [];
 
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $data[] = $this->serialize($file);
         }
 

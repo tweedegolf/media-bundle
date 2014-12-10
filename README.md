@@ -55,6 +55,12 @@ tweedegolf_media:
     prefix:   /api
 ```
 
+Make sure the path to the bundle matches the path specified in the javascript source when including the media browser. Thus `/api` should match the firts part in the path speciefied when including the javascript source:
+
+```javascript
+var media_callback = require('tweedegolf-media-browser').tinymce_callback('/api/modal');
+```
+
 ### Add the bundle to your AppKernel
 Finally add the bundle in `app/AppKernel.php`:
 
