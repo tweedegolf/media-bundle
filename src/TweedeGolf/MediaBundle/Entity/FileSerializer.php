@@ -86,7 +86,7 @@ class FileSerializer
 
         if ($bytes) {
             $i = floor(log($bytes, 1024));
-            if (!in_array($i, $sizes)) {
+            if (!isset($sizes[$i])) {
                 return 'ultra huge';
             }
             return round($bytes / pow(1024, $i), 2) . ' ' . $sizes[$i];
