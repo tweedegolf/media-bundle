@@ -11,7 +11,7 @@
     "require": {
         "symfony/symfony": "~2.4",
         "doctrine/orm": "~2.4",
-        "doctrine/doctrine-bundle": "~1.2.0",
+        "doctrine/doctrine-bundle": "~1.2",
         "stof/doctrine-extensions-bundle": "~1.1",
         "vich/uploader-bundle": "~0.9",
         "liip/imagine-bundle": "~1.2",
