@@ -20,5 +20,10 @@
         "psr-4": {
             "TweedeGolf\\MediaBundle\\": "src/TweedeGolf/MediaBundle/"
         }
-    }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2.x-dev"
+        }
+    }    
 }
