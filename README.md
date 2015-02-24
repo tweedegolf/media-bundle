@@ -13,7 +13,6 @@ This repository only provides the Symfony2 bundle and can be installed via [comp
 Composer dependencies:
 
 * [StofDoctrineExtensionsBundle](https://github.com/stof/StofDoctrineExtensionsBundle)
-* [KnpGaufretteBundle](https://github.com/KnpLabs/KnpGaufretteBundle)
 * [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle)
 * [LiipImagineBundle](https://github.com/liip/LiipImagineBundle)
 
@@ -70,7 +69,6 @@ public function registerBundles()
     return array(
         // ...
         new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-        new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
         new Vich\UploaderBundle\VichUploaderBundle(),
         new Liip\ImagineBundle\LiipImagineBundle(),
         new TweedeGolf\MediaBundle\TweedeGolfMediaBundle(),

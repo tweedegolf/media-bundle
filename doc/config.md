@@ -1,5 +1,7 @@
 
-# Example configuration
+# Configuration Examples
+
+## With KnpGaufretteBundle
 
 Example configuration of StofdoctrineExtensions, KnpGaufretteBunlde, VichUploaderBundle and the LiipImagineBundle for the TweedegolfMediaBundle.
 
@@ -47,3 +49,28 @@ Example configuration of StofdoctrineExtensions, KnpGaufretteBunlde, VichUploade
                 - gaufrette://tgmedia_files/
             tags:
                 - { name: liip_imagine.data.loader, loader: stream.tgmedia_files }
+
+
+## Without KnpGaufretteBundle
+
+Example configuration of StofdoctrineExtensions, VichUploaderBundle and the LiipImagineBundle for the TweedegolfMediaBundle.
+
+    stof_doctrine_extensions:
+        orm:
+            default:
+                timestampable: true
+
+    vich_uploader:
+        db_driver: orm
+        mappings:
+            tgmedia_file:
+                uri_prefix: /uploads/tgmedia_files
+                upload_destination: %kernel.root_dir%/../web/uploads/tgmedia_files
+                namer: vich_uploader.namer_origname
+
+    liip_imagine:
+        filter_sets:
+            tgmedia_thumbnail:
+                quality: 80
+                filters:
+                    thumbnail: { size: [200, 150], mode: outbound }
