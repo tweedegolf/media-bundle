@@ -175,6 +175,16 @@ class File
     }
 
     /**
+     * Get fileSize
+     *
+     * @return integer
+     */
+    public function getFileSize()
+    {
+        return $this->fileSize;
+    }
+
+    /**
      * Check if the file is an image based on its mime type
      * @return boolean
      */

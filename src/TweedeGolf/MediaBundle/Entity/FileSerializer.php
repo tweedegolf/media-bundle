@@ -42,12 +42,13 @@ class FileSerializer
      */
     public function serialize(File $file)
     {
+        $fileFile = $file->getFile();
         $data = [
             'id'   => $file->getId(),
             'name' => $file->getFileName(),
             'path' => $this->vich->asset($file, 'file'),
-            'size' => $this->formatSize($file->getFile()->getSize()),
-            'mime' => $file->getFile()->getMimeType(),
+            'size' => $this->formatSize(is_null($fileFile) ? $file->getFileSize() : $fileFile->getSize()),
+            'mime' => is_null($fileFile) ? $file->getMimeType() : $fileFile->getMimeType(),
         ];
 
         if ($file->isImage()) {
