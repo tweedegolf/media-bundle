@@ -2,6 +2,7 @@
 
 namespace TweedeGolf\MediaBundle\Entity;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use TweedeGolf\MediaBundle\Entity\File;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper ;
@@ -63,14 +64,14 @@ class FileSerializer
 
     /**
      * Serialize a list of files
-     * @param array File
+     * @param Paginator $paginator
      * @return array
      */
-    public function serializeAll(array $files)
+    public function serializeAll(Paginator $paginator)
     {
         $data = [];
 
-        foreach ($files as $file) {
+        foreach ($paginator as $file) {
             $data[] = $this->serialize($file);
         }
 
