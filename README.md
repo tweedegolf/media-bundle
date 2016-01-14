@@ -40,9 +40,16 @@ For installation instructions of the [media browser, see the repository](https:/
 ### Basic configuration
 Define mappings in your configuration file `app/config/config.yml`:
 
-There are no direct bundle configurations. However, the MediaBundle depends on some configurations in other bundles. There needs to be a VichUploader mapping defined with the name `tgmedia_files`. Furthermore, there has to be a LiipImagine filter with the name `tgmedia_thumbnail`.
+You can configure the maximum number of items displayed per page.
 
-A [example configuration of these bundles][doc/config.md] is available in the documentation.
+```yaml
+tweede_golf_media:
+    max_per_page: 24  # default is 18
+```
+
+Also, the MediaBundle depends on some configurations in other bundles. There needs to be a VichUploader mapping defined with the name `tgmedia_files`. Furthermore, there has to be a LiipImagine filter with the name `tgmedia_thumbnail`.
+
+A [example configuration of these bundles](doc/config.md) is available in the documentation.
 
 ### Add routes to your routing file
 In `app/config/routing.yml`, add the routes for the media bundle api:

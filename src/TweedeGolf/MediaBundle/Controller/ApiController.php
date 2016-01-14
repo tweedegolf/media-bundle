@@ -36,13 +36,17 @@ class ApiController extends Controller
     {
         $filter = $request->query->get('filter', 'all');
         $order = $request->query->get('order', 'newest');
+        $page = $request->query->get('page', 1);
+        $max = $this->container->getParameter('tweede_golf_media.max_per_page');
 
         $repo = $this->getDoctrine()->getRepository('TweedeGolfMediaBundle:File');
-        $results = $repo->findSubset($filter, $order);
-        $data = $this->get('tweedegolf.media.file_serializer')->serializeAll($results);
+        $paginator = $repo->findSubset($filter, $order, $page, $max);
+        $data = $this->get('tweedegolf.media.file_serializer')->serializeAll($paginator);
 
         return new JsonResponse([
-            'success' => $data
+            'success' => $data,
+            'total' => count($paginator),
+            'max' => $max,
         ]);
     }
 

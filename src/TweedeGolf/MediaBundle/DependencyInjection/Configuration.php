@@ -18,7 +18,14 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('tgmedia');
+        $rootNode = $treeBuilder->root('tweede_golf_media');
+        $rootNode
+            ->children()
+                ->scalarNode('max_per_page')
+                    ->defaultValue(18)
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

@@ -4,6 +4,7 @@ namespace TweedeGolf\MediaBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use TweedeGolf\MediaBundle\Entity\File;
 
 /**
@@ -17,16 +18,18 @@ class FileRepository extends EntityRepository
      * Retrieve a filtered and ordered list of files
      * @param string $type  optional filter for file types
      * @param string $order optional sorting
-     * @return array
+     * @param int    $page
+     * @param int    $max
+     * @return Paginator
      */
-    public function findSubset($type = 'all', $order = 'newest')
+    public function findSubset($type = 'all', $order = 'newest', $page = 1, $max = 18)
     {
-        $qb = $this->createQueryBuilder('f');
+        $qb = $this->createQueryBuilder('f')->setMaxResults($max)->setFirstResult($max * ($page - 1));
 
         if ($type === 'images') {
             $qb->where($qb->expr()->in('f.mimeType', '?1'));
             $qb->setParameter(1, array_merge(File::getImageMimetypes()));
-        } else if ($type === 'documents') {
+        } elseif ($type === 'documents') {
             $qb->where($qb->expr()->notIn('f.mimeType', '?1'));
             $qb->setParameter(1, array_merge(File::getImageMimetypes()));
         }
@@ -37,12 +40,15 @@ class FileRepository extends EntityRepository
             $qb->orderBy($mapping[$order]['field'], $mapping[$order]['direction']);
         }
 
-        return $qb->getQuery()->getResult();
+        $query = $qb->getQuery();
+        $paginator = new Paginator($query, false);
+
+        return $paginator;
     }
 
     /**
      * Get a mapping of sort names to sort parameters
-     * @return array 
+     * @return array
      */
     static public function getOrderMapping()
     {
