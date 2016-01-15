@@ -206,4 +206,28 @@ class File
             'image/png',
         ];
     }
+
+    /**
+     * @param string $type
+     *
+     * @return File
+     */
+    public function setMimeType($type)
+    {
+        $this->mimeType = $type;
+
+        return $this;
+    }
+
+    /**
+     * @param int $size
+     *
+     * @return File
+     */
+    public function setFileSize($size)
+    {
+        $this->fileSize = $size;
+
+        return $this;
+    }
 }
