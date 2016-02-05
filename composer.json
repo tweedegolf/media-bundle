@@ -9,11 +9,11 @@
         }
     ],
     "require": {
-        "symfony/symfony": "~2.4",
+        "symfony/symfony": "~2.4|~3.0",
         "doctrine/orm": "~2.4",
         "doctrine/doctrine-bundle": "~1.2",
         "stof/doctrine-extensions-bundle": "~1.1",
-        "vich/uploader-bundle": "~0.14",
+        "vich/uploader-bundle": "~0.14|~1.0",
         "liip/imagine-bundle": "~1.2"
     },
     "autoload": {
