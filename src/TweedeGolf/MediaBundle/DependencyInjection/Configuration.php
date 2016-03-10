@@ -24,6 +24,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('max_per_page')
                     ->defaultValue(18)
                 ->end()
+                ->scalarNode('file_entity')
+                    ->isRequired()
+                ->end()
             ->end()
         ;
 
