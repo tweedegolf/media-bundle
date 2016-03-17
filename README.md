@@ -38,13 +38,53 @@ Then run `composer update tweedegolf/media-bundle`
 For installation instructions of the [media browser, see the repository](https://github.com/tweedegolf/media-browser).
 
 ### Basic configuration
+
 Define mappings in your configuration file `app/config/config.yml`:
 
 You can configure the maximum number of items displayed per page.
 
+You **must** configure the name of your File entity.
+
 ```yaml
 tweede_golf_media:
-    max_per_page: 24  # default is 18
+    max_per_page: 24  # this is optional (default is 18)
+    file_entity: 'AppBundle:File'  # this is required
+```
+
+This is an example of File entity you can define:
+
+```php
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use TweedeGolf\MediaBundle\Model\AbstractFile
+
+/**
+ * @ORM\Entity
+ * @ORM\Table
+ * @ORM\Entity(repositoryClass="TweedeGolf\MediaBundle\Entity\FileRepository")
+ */
+class File extends AbstractFile
+{
+    /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+
 ```
 
 Also, the MediaBundle depends on some configurations in other bundles. There needs to be a VichUploader mapping defined with the name `tgmedia_files`. Furthermore, there has to be a LiipImagine filter with the name `tgmedia_thumbnail`.

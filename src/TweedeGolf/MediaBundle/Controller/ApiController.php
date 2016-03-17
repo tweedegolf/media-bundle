@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use TweedeGolf\MediaBundle\Entity\File;
+use TweedeGolf\MediaBundle\Model\AbstractFile;
 
 /**
  * Class MediaController
@@ -39,8 +39,7 @@ class ApiController extends Controller
         $page = $request->query->get('page', 1);
         $max = $this->container->getParameter('tweede_golf_media.max_per_page');
 
-        $repo = $this->getDoctrine()->getRepository('TweedeGolfMediaBundle:File');
-        $paginator = $repo->findSubset($filter, $order, $page, $max);
+        $paginator = $this->get('tweedegolf.repository.file')->findSubset($filter, $order, $page, $max);
         $data = $this->get('tweedegolf.media.file_serializer')->serializeAll($paginator);
 
         return new JsonResponse([
@@ -64,7 +63,7 @@ class ApiController extends Controller
         if ($id !== null) {
 
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('TweedeGolfMediaBundle:File')->find($id);
+            $entity = $this->get('tweedegolf.repository.file')->find($id);
 
             if (!$entity) {
                 return new JsonResponse([
@@ -129,10 +128,10 @@ class ApiController extends Controller
      * Create the upload form
      * Only used for validation
      *
-     * @param File $entity
+     * @param AbstractFile $entity
      * @return Form
      */
-    protected function createCreateForm(File $entity)
+    protected function createCreateForm(AbstractFile $entity)
     {
         $builder = $this->get('form.factory')->createNamedBuilder('', 'form', $entity, [
             'csrf_protection' => false,

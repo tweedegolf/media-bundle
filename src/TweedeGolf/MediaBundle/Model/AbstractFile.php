@@ -1,9 +1,8 @@
 <?php
 
-namespace TweedeGolf\MediaBundle\Entity;
+namespace TweedeGolf\MediaBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\HttpFoundation\File\File as UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -12,23 +11,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Attachment
  *
- * @ORM\Entity
- * @ORM\Table()
+ * @ORM\MappedSuperclass
  * @Vich\Uploadable
- * @ORM\Entity(repositoryClass="TweedeGolf\MediaBundle\Entity\FileRepository")
  */
-class File
+abstract class AbstractFile
 {
     use TimestampableEntity;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @Assert\File(maxSize="20M", mimeTypes={
@@ -55,25 +43,25 @@ class File
      *
      * @var UploadedFile $file
      */
-    private $file;
+    protected $file;
 
     /**
      * @var string $fileName
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $fileName;
+    protected $fileName;
 
     /**
      * @var string $fileSize
      * @ORM\Column(type="integer", nullable=false)
      */
-    private $fileSize;
+    protected $fileSize;
 
     /**
      * @var string $mimeType
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $mimeType;
+    protected $mimeType;
 
     /**
      * Return the string representation of this entity
@@ -82,16 +70,6 @@ class File
     public function __toString()
     {
         return $this->fileName;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
