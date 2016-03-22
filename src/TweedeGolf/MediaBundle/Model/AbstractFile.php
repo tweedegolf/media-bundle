@@ -9,7 +9,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Attachment
+ * Attachment.
  *
  * @ORM\MappedSuperclass
  * @Vich\Uploadable
@@ -41,30 +41,31 @@ abstract class AbstractFile
      * @Assert\NotBlank()
      * @Vich\UploadableField(mapping="tgmedia_file", fileNameProperty="fileName")
      *
-     * @var UploadedFile $file
+     * @var UploadedFile
      */
     protected $file;
 
     /**
-     * @var string $fileName
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $fileName;
 
     /**
-     * @var string $fileSize
+     * @var string
      * @ORM\Column(type="integer", nullable=false)
      */
     protected $fileSize;
 
     /**
-     * @var string $mimeType
+     * @var string
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $mimeType;
 
     /**
-     * Return the string representation of this entity
+     * Return the string representation of this entity.
+     *
      * @return string
      */
     public function __toString()
@@ -73,9 +74,10 @@ abstract class AbstractFile
     }
 
     /**
-     * Set file
+     * Set file.
      *
      * @param UploadedFile $file
+     *
      * @return $this
      */
     public function setFile(UploadedFile $file = null)
@@ -96,7 +98,7 @@ abstract class AbstractFile
     }
 
     /**
-     * Get file
+     * Get file.
      *
      * @return UploadedFile
      */
@@ -106,9 +108,10 @@ abstract class AbstractFile
     }
 
     /**
-     * Set fileName
+     * Set fileName.
      *
      * @param string $fileName
+     *
      * @return UploadedFile
      */
     public function setFileName($fileName = null)
@@ -119,21 +122,21 @@ abstract class AbstractFile
     }
 
     /**
-     * Retrieve the extension of the file
+     * Retrieve the extension of the file.
+     *
      * @return string
      */
     public function getExtension()
     {
         if (!$this->fileName) {
-
-            return null;
+            return;
         }
 
         return pathinfo($this->fileName, PATHINFO_EXTENSION);
     }
 
     /**
-     * Get mimeType
+     * Get mimeType.
      *
      * @return string
      */
@@ -143,7 +146,7 @@ abstract class AbstractFile
     }
 
     /**
-     * Get fileName
+     * Get fileName.
      *
      * @return string
      */
@@ -153,9 +156,9 @@ abstract class AbstractFile
     }
 
     /**
-     * Get fileSize
+     * Get fileSize.
      *
-     * @return integer
+     * @return int
      */
     public function getFileSize()
     {
@@ -163,8 +166,9 @@ abstract class AbstractFile
     }
 
     /**
-     * Check if the file is an image based on its mime type
-     * @return boolean
+     * Check if the file is an image based on its mime type.
+     *
+     * @return bool
      */
     public function isImage()
     {
@@ -172,7 +176,8 @@ abstract class AbstractFile
     }
 
     /**
-     * Return valid image mime types
+     * Return valid image mime types.
+     *
      * @return array[string]
      */
     public static function getImageMimetypes()

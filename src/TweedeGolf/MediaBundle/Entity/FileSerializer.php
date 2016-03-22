@@ -5,22 +5,20 @@ namespace TweedeGolf\MediaBundle\Entity;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use TweedeGolf\MediaBundle\Model\AbstractFile;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper ;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager as ImagineCacheManager;
 
 /**
  * This class is responsible for serializing a file
  * Converts a file entity to an associative array and adds
- * extra fields like an URL to the thumbnail image
+ * extra fields like an URL to the thumbnail image.
  */
 class FileSerializer
 {
-
     /**
      * @var UploaderHelper
      */
     private $vich;
-
 
     /**
      * @var ImagineCacheManager
@@ -37,15 +35,17 @@ class FileSerializer
     }
 
     /**
-     * Serialize a single file
+     * Serialize a single file.
+     *
      * @param AbstractFile $File
+     *
      * @return array
      */
     public function serialize(AbstractFile $file)
     {
         $fileFile = $file->getFile();
         $data = [
-            'id'   => $file->getId(),
+            'id' => $file->getId(),
             'name' => $file->getFileName(),
             'path' => $this->vich->asset($file, 'file'),
             'size' => $this->formatSize(is_null($fileFile) ? $file->getFileSize() : $fileFile->getSize()),
@@ -63,8 +63,10 @@ class FileSerializer
     }
 
     /**
-     * Serialize a list of files
+     * Serialize a list of files.
+     *
      * @param Paginator $paginator
+     *
      * @return array
      */
     public function serializeAll(Paginator $paginator)
@@ -79,8 +81,9 @@ class FileSerializer
     }
 
     /**
-     * Convert a size in bytes to a human readable representation
-     * @param integer $bytes number of bytes
+     * Convert a size in bytes to a human readable representation.
+     *
+     * @param int $bytes number of bytes
      */
     protected function formatSize($bytes)
     {
@@ -91,7 +94,8 @@ class FileSerializer
             if (!isset($sizes[$i])) {
                 return 'ultra huge';
             }
-            return round($bytes / pow(1024, $i), 2) . ' ' . $sizes[$i];
+
+            return round($bytes / pow(1024, $i), 2).' '.$sizes[$i];
         }
 
         return '0 B';
