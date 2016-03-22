@@ -3,7 +3,7 @@
 namespace TweedeGolf\MediaBundle\Entity;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use TweedeGolf\MediaBundle\Entity\File;
+use TweedeGolf\MediaBundle\Model\AbstractFile;
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper ;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager as ImagineCacheManager;
@@ -38,10 +38,10 @@ class FileSerializer
 
     /**
      * Serialize a single file
-     * @param File $File
+     * @param AbstractFile $File
      * @return array
      */
-    public function serialize(File $file)
+    public function serialize(AbstractFile $file)
     {
         $fileFile = $file->getFile();
         $data = [
