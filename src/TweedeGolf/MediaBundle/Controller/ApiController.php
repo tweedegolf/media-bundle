@@ -95,13 +95,13 @@ class ApiController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new File();
+        $entityName = $this->container->getParameter('tweede_golf_media.file_entity');
+        $em = $this->getDoctrine()->getManager();
+        $className = $em->getClassMetadata($entityName)->getName();
+        $entity = new $className();
 
         $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+        if ($form->handleRequest($request)->isValid()) {
             $em->persist($entity);
             $em->flush();
 
