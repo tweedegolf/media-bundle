@@ -1,6 +1,6 @@
 # TweedeGolf MediaBundle
 
-The TweedeGolf MediaBundle provides a ready-to-use media manager for your Symfony2 project. Although it is especially designed to work with tinyMCE, the media bundle could be used for several other purposes.
+The TweedeGolf MediaBundle provides a ready-to-use media manager for your Symfony project. Although it is especially designed to work with tinyMCE, the media bundle could be used for several other purposes.
 
 ![screenshot of the media manger modal](https://raw.githubusercontent.com/tweedegolf/media-bundle/master/doc/screen.png)
 
@@ -8,7 +8,7 @@ In essence, the TweedeGolf MediaBundle provides a File Entity and a controller t
 
 ## Dependencies
 
-This repository only provides the Symfony2 bundle and can be installed via [composer](https://getcomposer.org/). The front-end scripts used to display the modal can be found on [https://github.com/tweedegolf/media-browser](https://github.com/tweedegolf/media-browser) and can be installed using [bower](http://bower.io).
+This repository only provides the Symfony bundle and can be installed via [composer](https://getcomposer.org/). The front-end scripts used to display the modal can be found on [https://github.com/tweedegolf/media-browser](https://github.com/tweedegolf/media-browser) and can be installed using [bower](http://bower.io).
 
 Composer dependencies:
 
@@ -21,19 +21,11 @@ Bower dependencies:
 * [TweedeGolfMediaBrowser](https://github.com/tweedegolf/media-browser)
 
 ## Installation and configuration
-A good starting point to setup a symfony2 project with [bower](http://bower.io) and [gulp](http://gulpjs.com/) is [the TweedeGolf Symfony Okoa Project](https://github.com/tweedegolf/symfony-okoa).
 
-Using [Composer](https://getcomposer.org/) add the bundle to your requirements:
+A good starting point to setup a Symfony project with [bower](http://bower.io) and [gulp](http://gulpjs.com/) is the [TweedeGolf Symfony Okoa Project](https://github.com/tweedegolf/symfony-okoa).
 
-```json
-{
-    "require": {
-        "tweedegolf/media-bundle": "0.1.*"
-    }
-}
-```
-
-Then run `composer update tweedegolf/media-bundle`
+Using [Composer](https://getcomposer.org/) add the bundle to your requirements, running
+`composer require tweedegolf/media-bundle`.
 
 For installation instructions of the [media browser, see the repository](https://github.com/tweedegolf/media-browser).
 
@@ -60,7 +52,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use TweedeGolf\MediaBundle\Model\AbstractFile
+use TweedeGolf\MediaBundle\Model\AbstractFile;
 
 /**
  * @ORM\Entity
@@ -70,7 +62,7 @@ use TweedeGolf\MediaBundle\Model\AbstractFile
 class File extends AbstractFile
 {
     /**
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -92,6 +84,7 @@ Also, the MediaBundle depends on some configurations in other bundles. There nee
 A [example configuration of these bundles](doc/config.md) is available in the documentation.
 
 ### Add routes to your routing file
+
 In `app/config/routing.yml`, add the routes for the media bundle api:
 
 ```yaml
@@ -108,6 +101,7 @@ var media_callback = require('tweedegolf-media-browser').tinymce_callback('/api/
 ```
 
 ### Add the bundle to your AppKernel
+
 Finally add the bundle in `app/AppKernel.php`:
 
 ```php

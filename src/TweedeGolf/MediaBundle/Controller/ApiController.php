@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Request;
 use TweedeGolf\MediaBundle\Model\AbstractFile;
 
 /**
- * Class MediaController
+ * Class MediaController.
  */
 class ApiController extends Controller
 {
     /**
-     * Render the modal template
+     * Render the modal template.
      *
      * @Route("/modal")
      * @Method("GET")
@@ -27,7 +27,7 @@ class ApiController extends Controller
     }
 
     /**
-     * List, sort and filter files
+     * List, sort and filter files.
      *
      * @Route("/", name="tgmedia_index")
      * @Method("GET")
@@ -50,7 +50,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Delete a new file entity
+     * Delete a new file entity.
      *
      * @Route("/delete", name="tgmedia_delete")
      * @Method("POST")
@@ -61,7 +61,6 @@ class ApiController extends Controller
         $translator = $this->get('translator');
 
         if ($id !== null) {
-
             $em = $this->getDoctrine()->getManager();
             $entity = $this->get('tweedegolf.repository.file')->find($id);
 
@@ -89,7 +88,7 @@ class ApiController extends Controller
     }
 
     /**
-     * Creates a new file entity
+     * Creates a new file entity.
      *
      * @Route("/create", name="tgmedia_create")
      * @Method("POST")
@@ -109,7 +108,7 @@ class ApiController extends Controller
             $data = $this->get('tweedegolf.media.file_serializer')->serialize($entity);
 
             return new JsonResponse([
-                'success' => $data
+                'success' => $data,
             ]);
         }
 
@@ -126,9 +125,10 @@ class ApiController extends Controller
 
     /**
      * Create the upload form
-     * Only used for validation
+     * Only used for validation.
      *
      * @param AbstractFile $entity
+     *
      * @return Form
      */
     protected function createCreateForm(AbstractFile $entity)
