@@ -4,6 +4,7 @@ namespace TweedeGolf\MediaBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use TweedeGolf\MediaBundle\Model\AbstractFile;
 
 /**
  * File entity repository class
@@ -27,10 +28,10 @@ class FileRepository extends EntityRepository
 
         if ($type === 'images') {
             $qb->where($qb->expr()->in('f.mimeType', '?1'));
-            $qb->setParameter(1, array_merge(File::getImageMimetypes()));
+            $qb->setParameter(1, array_merge(AbstractFile::getImageMimetypes()));
         } elseif ($type === 'documents') {
             $qb->where($qb->expr()->notIn('f.mimeType', '?1'));
-            $qb->setParameter(1, array_merge(File::getImageMimetypes()));
+            $qb->setParameter(1, array_merge(AbstractFile::getImageMimetypes()));
         }
 
         $mapping = self::getOrderMapping();
