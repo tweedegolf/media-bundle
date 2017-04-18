@@ -3,10 +3,10 @@
 namespace TweedeGolf\MediaBundle\Entity;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use TweedeGolf\MediaBundle\Model\AbstractFile;
-use Symfony\Bundle\FrameworkBundle\Translation\Translator;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager as ImagineCacheManager;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use TweedeGolf\MediaBundle\Model\AbstractFile;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
  * This class is responsible for serializing a file
