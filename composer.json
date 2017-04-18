@@ -9,21 +9,27 @@
         }
     ],
     "require": {
-        "symfony/symfony": "~2.4|~3.0",
-        "doctrine/orm": "~2.4",
         "doctrine/doctrine-bundle": "~1.2",
+        "doctrine/orm": "~2.4",
+        "liip/imagine-bundle": "~1.2",
         "stof/doctrine-extensions-bundle": "~1.1",
-        "vich/uploader-bundle": "~0.14|~1.0",
-        "liip/imagine-bundle": "~1.2"
+        "symfony/symfony": "^2.7|^3.0",
+        "vich/uploader-bundle": "^1.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.2"
     },
     "autoload": {
         "psr-4": {
             "TweedeGolf\\MediaBundle\\": "src/TweedeGolf/MediaBundle/"
         }
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "0.2.x-dev"
         }
-    }    
+    }
 }
