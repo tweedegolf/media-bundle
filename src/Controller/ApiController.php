@@ -21,7 +21,7 @@ class ApiController extends Controller
      * @Route("/modal")
      * @Method("GET")
      */
-    public function modalAction(Request $request)
+    public function modalAction()
     {
         return $this->render('TweedeGolfMediaBundle:File:modal.html.twig');
     }

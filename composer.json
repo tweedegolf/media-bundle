@@ -1,6 +1,6 @@
 {
     "name": "tweedegolf/media-bundle",
-    "description": "Media manager bundle for Symfony2 and tinyMCE",
+    "description": "Media manager bundle for Symfony and tinyMCE",
     "license": "MIT",
     "authors": [
         {
@@ -9,20 +9,25 @@
         }
     ],
     "require": {
-        "doctrine/doctrine-bundle": "~1.2",
-        "doctrine/orm": "~2.4",
-        "liip/imagine-bundle": "~1.2",
-        "stof/doctrine-extensions-bundle": "~1.1",
+        "php": ">=5.4",
+        "doctrine/doctrine-bundle": "^1.2",
+        "doctrine/orm": "^2.4",
+        "liip/imagine-bundle": "^1.2",
+        "stof/doctrine-extensions-bundle": "^1.1",
         "symfony/symfony": "^2.7|^3.0",
         "vich/uploader-bundle": "^1.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.2"
+        "friendsofphp/php-cs-fixer": "^2.2",
+        "phpunit/phpunit": "^5.7|^6.0"
     },
     "autoload": {
         "psr-4": {
-            "TweedeGolf\\MediaBundle\\": "src/TweedeGolf/MediaBundle/"
+            "TweedeGolf\\MediaBundle\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": { "Tests\\": "tests/" }
     },
     "config": {
         "sort-packages": true
