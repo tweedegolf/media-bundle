@@ -2,9 +2,13 @@
 
 namespace Tests\Controller;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use TweedeGolf\MediaBundle\Controller\ApiController;
+use TweedeGolf\MediaBundle\Entity\FileRepository;
+use TweedeGolf\MediaBundle\Entity\FileSerializer;
 use Tests\TestCase;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
@@ -43,7 +47,22 @@ class UserControllerTest extends TestCase
 
     public function testIndexAction()
     {
-        $this->markTestIncomplete();
+        $paginator = $this->getMockBuilder(Paginator::class)->disableOriginalConstructor()->getMock();
+        $query = $this->getMockBuilder(ParameterBag::class)->disableOriginalConstructor()->getMock();
+        $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
+        $request->query = $query;
+        $repository = $this->getMockBuilder(FileRepository::class)->disableOriginalConstructor()->getMock();
+        $serializer = $this->getMockBuilder(FileSerializer::class)->disableOriginalConstructor()->getMock();
+
+        $this->container->expects($this->once())->method('getParameter')->with('tweede_golf_media.max_per_page')
+            ->will($this->returnValue(10));
+        $this->container->expects($this->at(1))->method('get')->with('tweedegolf.repository.file')
+            ->will($this->returnValue($repository));
+        $repository->expects($this->once())->method('findSubset')->will($this->returnValue($paginator));
+        $this->container->expects($this->at(2))->method('get')->with('tweedegolf.media.file_serializer')
+            ->will($this->returnValue($serializer));
+
+        $this->controller->indexAction($request);
     }
 
     public function testCreateAction()
