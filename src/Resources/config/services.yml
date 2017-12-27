@@ -1,11 +1,12 @@
-
 services:
     tweedegolf.media.file_serializer:
+        public: true
         class: TweedeGolf\MediaBundle\Entity\FileSerializer
         arguments:
             - '@vich_uploader.templating.helper.uploader_helper'
             - '@liip_imagine.cache.manager'
     tweedegolf.repository.file:
+        public: true
         class: TweedeGolf\MediaBundle\Entity\FileRepository
         factory: ['@doctrine', getRepository]
         arguments: ['%tweede_golf_media.file_entity%']

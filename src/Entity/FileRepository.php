@@ -26,10 +26,10 @@ class FileRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('f')->setMaxResults($max)->setFirstResult($max * ($page - 1));
 
-        if ($type === 'images') {
+        if ('images' === $type) {
             $qb->where($qb->expr()->in('f.mimeType', '?1'));
             $qb->setParameter(1, array_merge(AbstractFile::getImageMimetypes()));
-        } elseif ($type === 'documents') {
+        } elseif ('documents' === $type) {
             $qb->where($qb->expr()->notIn('f.mimeType', '?1'));
             $qb->setParameter(1, array_merge(AbstractFile::getImageMimetypes()));
         }

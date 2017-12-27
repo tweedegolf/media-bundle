@@ -60,7 +60,7 @@ class ApiController extends Controller
         $id = $request->get('file');
         $translator = $this->get('translator');
 
-        if ($id !== null) {
+        if (null !== $id) {
             $em = $this->getDoctrine()->getManager();
             $entity = $this->get('tweedegolf.repository.file')->find($id);
 

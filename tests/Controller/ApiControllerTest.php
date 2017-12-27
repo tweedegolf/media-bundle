@@ -40,7 +40,7 @@ class UserControllerTest extends TestCase
             ->will($this->returnValue($this->templating));
 
         $response = $this->createMock(Response::class);
-        $this->templating->expects($this->once())->method('renderResponse')->will($this->returnValue($response));
+        $this->templating->expects($this->once())->method('render')->will($this->returnValue($response));
 
         $this->controller->modalAction();
     }
