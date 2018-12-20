@@ -12,7 +12,6 @@ This repository only provides the Symfony bundle and can be installed via [compo
 
 Composer dependencies:
 
-* [StofDoctrineExtensionsBundle](https://github.com/stof/StofDoctrineExtensionsBundle)
 * [VichUploaderBundle](https://github.com/dustin10/VichUploaderBundle)
 * [LiipImagineBundle](https://github.com/liip/LiipImagineBundle)
 
@@ -109,7 +108,6 @@ public function registerBundles()
 {
     return array(
         // ...
-        new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         new Vich\UploaderBundle\VichUploaderBundle(),
         new Liip\ImagineBundle\LiipImagineBundle(),
         new TweedeGolf\MediaBundle\TweedeGolfMediaBundle(),

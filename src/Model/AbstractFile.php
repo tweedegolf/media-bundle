@@ -3,7 +3,6 @@
 namespace TweedeGolf\MediaBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\HttpFoundation\File\File as UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -16,7 +15,17 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 abstract class AbstractFile
 {
-    use TimestampableEntity;
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $updatedAt;
 
     /**
      * @Assert\File(maxSize="20M", mimeTypes={
@@ -84,7 +93,7 @@ abstract class AbstractFile
     {
         $this->file = $file;
 
-        $this->setUpdatedAt(new \DateTime());
+        $this->updatedAt = new \DateTime();
 
         if ($file) {
             $this->mimeType = $file->getMimeType();
@@ -212,5 +221,21 @@ abstract class AbstractFile
         $this->fileSize = $size;
 
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }
