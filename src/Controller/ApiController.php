@@ -44,7 +44,7 @@ class ApiController extends Controller
 
         return new JsonResponse([
             'success' => $data,
-            'total' => count($paginator),
+            'total' => \count($paginator),
             'max' => $max,
         ]);
     }
@@ -76,7 +76,7 @@ class ApiController extends Controller
             $em->flush();
 
             return new JsonResponse([
-                'success' => intval($id),
+                'success' => (int) $id,
             ]);
         }
 

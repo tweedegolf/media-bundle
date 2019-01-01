@@ -8,21 +8,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Attachment.
- *
  * @ORM\MappedSuperclass
  * @Vich\Uploadable
  */
 abstract class AbstractFile
 {
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updatedAt;
@@ -50,46 +48,34 @@ abstract class AbstractFile
      * @Assert\NotBlank()
      * @Vich\UploadableField(mapping="tgmedia_file", fileNameProperty="fileName")
      *
-     * @var UploadedFile
+     * @var UploadedFile|null
      */
     protected $file;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $fileName;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="integer", nullable=false)
      */
     protected $fileSize;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $mimeType;
 
-    /**
-     * Return the string representation of this entity.
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->fileName;
+        return (string) $this->fileName;
     }
 
-    /**
-     * Set file.
-     *
-     * @param UploadedFile $file
-     *
-     * @return $this
-     */
-    public function setFile(UploadedFile $file = null)
+    public function setFile(?UploadedFile $file = null): self
     {
         $this->file = $file;
 
@@ -106,70 +92,38 @@ abstract class AbstractFile
         return $this;
     }
 
-    /**
-     * Get file.
-     *
-     * @return UploadedFile
-     */
-    public function getFile()
+    public function getFile(): ?UploadedFile
     {
         return $this->file;
     }
 
-    /**
-     * Set fileName.
-     *
-     * @param string $fileName
-     *
-     * @return UploadedFile
-     */
-    public function setFileName($fileName = null)
+    public function setFileName(?string $fileName = null): self
     {
         $this->fileName = $fileName;
 
         return $this;
     }
 
-    /**
-     * Retrieve the extension of the file.
-     *
-     * @return string
-     */
-    public function getExtension()
+    public function getExtension(): ?string
     {
         if (!$this->fileName) {
-            return;
+            return null;
         }
 
-        return pathinfo($this->fileName, PATHINFO_EXTENSION);
+        return \pathinfo($this->fileName, PATHINFO_EXTENSION);
     }
 
-    /**
-     * Get mimeType.
-     *
-     * @return string
-     */
-    public function getMimeType()
+    public function getMimeType(): ?string
     {
         return $this->mimeType;
     }
 
-    /**
-     * Get fileName.
-     *
-     * @return string
-     */
-    public function getFileName()
+    public function getFileName(): ?string
     {
         return $this->fileName;
     }
 
-    /**
-     * Get fileSize.
-     *
-     * @return int
-     */
-    public function getFileSize()
+    public function getFileSize(): ?int
     {
         return $this->fileSize;
     }
@@ -179,17 +133,17 @@ abstract class AbstractFile
      *
      * @return bool
      */
-    public function isImage()
+    public function isImage(): bool
     {
-        return in_array($this->mimeType, self::getImageMimetypes());
+        return \in_array($this->mimeType, self::getImageMimetypes());
     }
 
     /**
      * Return valid image mime types.
      *
-     * @return array[string]
+     * @return array|string[]
      */
-    public static function getImageMimetypes()
+    public static function getImageMimetypes(): array
     {
         return [
             'image/jpg',
@@ -199,42 +153,26 @@ abstract class AbstractFile
         ];
     }
 
-    /**
-     * @param string $type
-     *
-     * @return File
-     */
-    public function setMimeType($type)
+    public function setMimeType(?string $type): self
     {
         $this->mimeType = $type;
 
         return $this;
     }
 
-    /**
-     * @param int $size
-     *
-     * @return File
-     */
-    public function setFileSize($size)
+    public function setFileSize(?int $size): self
     {
         $this->fileSize = $size;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }

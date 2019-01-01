@@ -3,19 +3,18 @@
 namespace Tests\Controller;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use TweedeGolf\MediaBundle\Controller\ApiController;
-use TweedeGolf\MediaBundle\Entity\FileRepository;
-use TweedeGolf\MediaBundle\Entity\FileSerializer;
-use Tests\TestCase;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Tests\TestCase;
+use TweedeGolf\MediaBundle\Controller\ApiController;
+use TweedeGolf\MediaBundle\Entity\FileRepository;
+use TweedeGolf\MediaBundle\Entity\FileSerializer;
 
-
-class UserControllerTest extends TestCase
+class ApiControllerTest extends TestCase
 {
     // TODO.....
     protected $controller;
@@ -23,7 +22,7 @@ class UserControllerTest extends TestCase
     protected $router;
     protected $templating;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->container = $this->getMockBuilder(Container::class)->disableOriginalConstructor()->getMock();
         $this->router = $this->createMock(RouterInterface::class);
@@ -32,7 +31,7 @@ class UserControllerTest extends TestCase
         $this->controller->setContainer($this->container);
     }
 
-    public function testModalAction()
+    public function testModalAction(): void
     {
         $this->container->expects($this->once())->method('has')->with('templating')
             ->will($this->returnValue(true));
@@ -45,7 +44,7 @@ class UserControllerTest extends TestCase
         $this->controller->modalAction();
     }
 
-    public function testIndexAction()
+    public function testIndexAction(): void
     {
         $paginator = $this->getMockBuilder(Paginator::class)->disableOriginalConstructor()->getMock();
         $query = $this->getMockBuilder(ParameterBag::class)->disableOriginalConstructor()->getMock();
@@ -65,12 +64,12 @@ class UserControllerTest extends TestCase
         $this->controller->indexAction($request);
     }
 
-    public function testCreateAction()
+    public function testCreateAction(): void
     {
         $this->markTestIncomplete();
     }
 
-    public function testDeleteAction()
+    public function testDeleteAction(): void
     {
         $this->markTestIncomplete();
     }

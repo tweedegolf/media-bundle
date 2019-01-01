@@ -30,7 +30,7 @@ For installation instructions of the [media browser, see the repository](https:/
 
 ### Basic configuration
 
-Define mappings in your configuration file `app/config/config.yml`:
+Define mappings in your configuration file `config/packages/tweede_golf_media.yaml` (or `app/config/config.yml`):
 
 You can configure the maximum number of items displayed per page.
 
@@ -39,7 +39,7 @@ You **must** configure the name of your File entity.
 ```yaml
 tweede_golf_media:
     max_per_page: 24  # this is optional (default is 18)
-    file_entity: 'AppBundle:File'  # this is required
+    file_entity: 'App:File'  # this is required
 ```
 
 This is an example of File entity you can define:
@@ -47,7 +47,7 @@ This is an example of File entity you can define:
 ```php
 <?php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -67,10 +67,7 @@ class File extends AbstractFile
      */
     private $id;
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -84,13 +81,13 @@ A [example configuration of these bundles](doc/config.md) is available in the do
 
 ### Add routes to your routing file
 
-In `app/config/routing.yml`, add the routes for the media bundle api:
+Ini `config/routes.yaml` (or `app/config/routing.yml`), add the routes for the media bundle api:
 
 ```yaml
 tweedegolf_media:
     resource: "@TweedeGolfMediaBundle/Controller/"
-    type:     annotation
-    prefix:   /api
+    type: annotation
+    prefix: /api
 ```
 
 Make sure the path to the bundle matches the path specified in the javascript source when including the media browser. Thus `/api` should match the firts part in the path speciefied when including the javascript source:
@@ -101,17 +98,29 @@ var media_callback = require('tweedegolf-media-browser').tinymce_callback('/api/
 
 ### Add the bundle to your AppKernel
 
-Finally add the bundle in `app/AppKernel.php`:
+If you use Flex, you should already have bundles in `config/bundles.php`:
+
+```php
+return [
+    // ...
+    Vich\UploaderBundle\VichUploaderBundle::class => 'all',
+    Liip\ImagineBundle\LiipImagineBundle::class => 'all',
+    TweedeGolf\MediaBundle\TweedeGolfMediaBundle::class => 'all',
+    // ...
+];
+```
+
+If you still use old system, you need to manually add to `app/AppKernel.php`:
 
 ```php
 public function registerBundles()
 {
-    return array(
+    return [
         // ...
         new Vich\UploaderBundle\VichUploaderBundle(),
         new Liip\ImagineBundle\LiipImagineBundle(),
         new TweedeGolf\MediaBundle\TweedeGolfMediaBundle(),
         // ...
-    );
+    ];
 }
 ```

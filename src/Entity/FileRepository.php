@@ -22,21 +22,21 @@ class FileRepository extends EntityRepository
      *
      * @return Paginator
      */
-    public function findSubset($type = 'all', $order = 'newest', $page = 1, $max = 18)
+    public function findSubset(?string $type = 'all', ?string $order = 'newest', ?int $page = 1, ?int $max = 18): Paginator
     {
         $qb = $this->createQueryBuilder('f')->setMaxResults($max)->setFirstResult($max * ($page - 1));
 
         if ('images' === $type) {
             $qb->where($qb->expr()->in('f.mimeType', '?1'));
-            $qb->setParameter(1, array_merge(AbstractFile::getImageMimetypes()));
+            $qb->setParameter(1, \array_merge(AbstractFile::getImageMimetypes()));
         } elseif ('documents' === $type) {
             $qb->where($qb->expr()->notIn('f.mimeType', '?1'));
-            $qb->setParameter(1, array_merge(AbstractFile::getImageMimetypes()));
+            $qb->setParameter(1, \array_merge(AbstractFile::getImageMimetypes()));
         }
 
         $mapping = self::getOrderMapping();
 
-        if (in_array($order, array_keys($mapping))) {
+        if (\in_array($order, \array_keys($mapping))) {
             $qb->orderBy($mapping[$order]['field'], $mapping[$order]['direction']);
         }
 
@@ -51,7 +51,7 @@ class FileRepository extends EntityRepository
      *
      * @return array
      */
-    public static function getOrderMapping()
+    public static function getOrderMapping(): array
     {
         return [
             'oldest' => ['field' => 'f.createdAt', 'direction' => 'ASC'],
