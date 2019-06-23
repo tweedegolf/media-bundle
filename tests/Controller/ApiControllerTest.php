@@ -34,12 +34,12 @@ class ApiControllerTest extends TestCase
     public function testModalAction(): void
     {
         $this->container->expects($this->once())->method('has')->with('templating')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
         $this->container->expects($this->once())->method('get')->with('templating')
-            ->will($this->returnValue($this->templating));
+            ->willReturn($this->templating);
 
         $response = $this->createMock(Response::class);
-        $this->templating->expects($this->once())->method('render')->will($this->returnValue($response));
+        $this->templating->expects($this->once())->method('render')->willReturn($response);
 
         $this->controller->modalAction();
     }
@@ -54,12 +54,12 @@ class ApiControllerTest extends TestCase
         $serializer = $this->getMockBuilder(FileSerializer::class)->disableOriginalConstructor()->getMock();
 
         $this->container->expects($this->once())->method('getParameter')->with('tweede_golf_media.max_per_page')
-            ->will($this->returnValue(10));
+            ->willReturn(10);
         $this->container->expects($this->at(1))->method('get')->with('tweedegolf.repository.file')
-            ->will($this->returnValue($repository));
-        $repository->expects($this->once())->method('findSubset')->will($this->returnValue($paginator));
+            ->willReturn($repository);
+        $repository->expects($this->once())->method('findSubset')->willReturn($paginator);
         $this->container->expects($this->at(2))->method('get')->with('tweedegolf.media.file_serializer')
-            ->will($this->returnValue($serializer));
+            ->willReturn($serializer);
 
         $this->controller->indexAction($request);
     }
